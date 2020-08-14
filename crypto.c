@@ -19,7 +19,6 @@
 #include "crypto.h"
 
 /********************************************************/
-/* Content stripped from Gladman's aes.h file           */
 #define N_ROW                   4
 #define N_COL                   4
 #define N_BLOCK   (N_ROW * N_COL)
@@ -41,8 +40,6 @@ static return_type aes_encrypt( const uint8_t in[N_BLOCK],
                          uint8_t out[N_BLOCK],
                          const aes_context ctx[1] );
 /********************************************************/
-/* Content stripped from Gladman's aes.c file           */
-
 /* functions for finite field multiplication in the AES Galois field    */
 #define WPOLY   0x011b
 #define f1(x)   (x)
