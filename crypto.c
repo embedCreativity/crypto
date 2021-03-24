@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2020 Embed Creativity LLC
+  Copyright (C) 2021 Embed Creativity LLC
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -17,6 +17,16 @@
 */
 
 #include "crypto.h"
+
+
+#ifdef WIN32
+#define PACKED 
+#pragma pack(push,1)
+#pragma comment(lib, "Ws2_32.lib")
+#else
+#define PACKED __attribute__ ((__packed__))
+#endif
+
 
 /********************************************************/
 #define N_ROW                   4
@@ -228,7 +238,7 @@ typedef struct _CryptoData_T {
     uint8_t Key[N_BLOCK];
     uint32_t counter;
     aes_context ctx;
-} __attribute__ ((__packed__)) CryptoData_T;
+} PACKED CryptoData_T;
 
 static void generate_crypto_pad (
     CryptoData_T* pHandle,
@@ -354,3 +364,8 @@ CryptoInterface_T cryptoIntf = {
     Decrypt
 };
 
+
+#ifdef WIN32
+#pragma pack(pop)
+#undef PACKED
+#endif

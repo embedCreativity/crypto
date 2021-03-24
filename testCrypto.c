@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2020 Embed Creativity LLC
+  Copyright (C) 2021 Embed Creativity LLC
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -21,7 +21,12 @@
 
 #include <stdint.h>     /* for unsigned values*/
 #include <stdio.h>   /* Standard input/output definitions */
+#ifdef WIN32
+#include <mbstring.h>
+#define bcmp _mbsncmp
+#else
 #include <string.h> /* Bcmp */
+#endif
 #include "crypto.h"
 
 #define TEST_LEN_1    16
@@ -137,7 +142,7 @@ int main ( void )
     }
 
     // make sure the output is invalidated
-    bzero(output, TEST_LEN_3);
+    memset(output, 0, TEST_LEN_3);
     // Start encrypting and storing output, one quarter at a time
     cryptoIntf.Encrypt( pHandle, plaintext_test3, output, TEST_LEN_3/4 );
     cryptoIntf.Encrypt( pHandle, (plaintext_test3 + (TEST_LEN_3/4)), (output + (TEST_LEN_3/4)), TEST_LEN_3/4 );

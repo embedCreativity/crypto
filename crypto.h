@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2020 Embed Creativity LLC
+  Copyright (C) 2021 Embed Creativity LLC
 
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -23,7 +23,15 @@
 #include <stdio.h>   /* Standard input/output definitions */
 #include <stdlib.h>
 #include <string.h>
+
+#ifdef WIN32
+#include <winsock.h> // for ntohl
+#define PACKED 
+#pragma pack(push,1)
+#else
 #include <netinet/in.h> // for htonl, ntohl
+#define PACKED __attribute__ ((__packed__))
+#endif
 
 #define IV_LEN     16
 #define KEY_LEN 16
@@ -82,7 +90,13 @@ typedef struct _CryptoInterface_T {
     FreeCryptoHandle_T FreeCryptoHandle;
     Encrypt_T Encrypt;
     Decrypt_T Decrypt;
-} __attribute__((__packed__)) CryptoInterface_T;
+} PACKED CryptoInterface_T;
+
+
+#ifdef WIN32
+#pragma pack(pop)
+#undef PACKED
+#endif
 
 #endif // CRYPTO_H
 
