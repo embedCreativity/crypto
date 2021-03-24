@@ -1,3 +1,4 @@
+libcrypto.a
 *.o
 testCrypto
 
