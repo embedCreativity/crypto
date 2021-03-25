@@ -1,4 +1,4 @@
-libcrypto.a
+libsimplecrypto.a
 *.o
 testCrypto
 
