@@ -1,6 +1,12 @@
 # Crypto
 Small and Simple AES-CTR 128-bit Wrapper
 
+# Coverity
+<a href="https://scan.coverity.com/projects/crypto">
+  <img alt="Coverity Scan Build Status"
+       src="https://scan.coverity.com/projects/26253/badge.svg"/>
+</a>
+
 ## Usage
 The Makefile can be modified to produce an installable library for your system. The lines that will do this are currently commented out. Switch around the active lines with the ones that are commented out. Currently, the AES implementation is simply compiled into an object file to be used with your application. Please refer to the test application that verifies the ciphertext produced by the library.
 
