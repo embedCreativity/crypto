@@ -20,7 +20,7 @@
 
 
 #ifdef WIN32
-#define PACKED 
+#define PACKED
 #pragma pack(push,1)
 #pragma comment(lib, "Ws2_32.lib")
 #else
@@ -192,7 +192,7 @@ static return_type aes_set_key( const uint8_t *key, length_type keylen, aes_cont
             t3 = s_box(tt);
             rc = f2(rc);
         }
-        else if( keylen > 24 && cc % keylen == 16 )
+        else if( cc % keylen == 16 && keylen > 24 )
         {
             t0 = s_box(t0);
             t1 = s_box(t1);
@@ -299,12 +299,15 @@ static CryptoHandle_T* CreateCryptoHandle (
     pHandle = (CryptoData_T*)malloc(sizeof(CryptoData_T));
     // check for malloc fail or bad input parameters
     if ( (pKey == NULL) || (pIV == NULL) || (pHandle == NULL) ) {
+        if ( NULL != pHandle ) {
+            free(pHandle);
+        }
         return NULL;
     }
 
     // set up structure
     pHandle->counter = 0;
-    if ( aes_set_key(pKey, N_BLOCK, &pHandle->ctx) != 0     ) {
+    if ( aes_set_key(pKey, N_BLOCK, &pHandle->ctx) != 0 ) {
         return NULL;
     }
     for ( i = 0; i < N_BLOCK; i++ ) {
